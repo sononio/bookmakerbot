@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "telegram.token",
+      "type": "java.lang.String",
+      "description": "Telegram bot API token."
+    },
+    {
+      "name": "telegram.invite_code",
+      "type": "java.lang.String",
+      "description": "Telegram bot invite code."
+    }
+] }

@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://${POSTGRES_HOST}/bookmakerdb"
+    username: bookmakeruser
+    password: "${POSTGRES_PASSWORD}"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate.enable_lazy_load_no_trans: true
+
+telegram:
+  bot-token: "${TELEGRAM_BOT_TOKEN}"
+  invite_code: "${INVITE_CODE}"
+  admin-bot-token: "${TELEGRAM_ADMIN_BOT_TOKEN}"
+  admin: "${TELEGRAM_ADMIN_USERNAME}"
