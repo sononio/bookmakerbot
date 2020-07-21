@@ -2,6 +2,7 @@
 
 Non commercial telegram bot for making bets.
 
+### Run
 If you want to run this, then set env variables
 ```
 POSTGRES_HOST
@@ -18,3 +19,6 @@ Run server via terminal:
 ```shell script
 gradlew bootRun
 ```
+
+### Contribute
+[Public backlog](https://github.com/sononio/bookmakerbot)
