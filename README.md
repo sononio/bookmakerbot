@@ -21,4 +21,4 @@ gradlew bootRun
 ```
 
 ### Contribute
-[Public backlog](https://github.com/sononio/bookmakerbot)
+[Public backlog](https://trello.com/b/iwQmAEE7/bookmaker-bot-backlog)
