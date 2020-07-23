@@ -26,6 +26,26 @@ val startLotMessage = message { text = """Прошу, опишите вашем�
             """.trimMargin("|")
 }
 
+val editLotMessage = message { text = """Прошу, опишите вашему слуге как изменить лот, милорд:
+
+            |name
+            |description
+            |question
+            |[max_error]
+            |[bets_end]
+            |[results]
+
+            |name: text string
+            |description: text string
+            |question: text string
+            |max_error: number (integer or real)
+            |bets_end: date in format '25-01-2012T10:40' in MSK
+            |results: date in format '25-01-2012T10:40' in MSK
+            
+            |Оставьте строку пустой, если хотите пропустить значение, которое необязательно знать смертным, милорд.
+            """.trimMargin("|")
+}
+
 val lotNotFound = message { text = "Приношу свои глубочайшие извинения, милорд! Ваш верный слуга не смог отыскать лот! Прошу, укажите на него еще раз..." }
 
 fun lotExplainAdmin(lot: Lot) =
@@ -44,6 +64,13 @@ fun lotListShow(lots: Iterable<Lot>) =
             import { lotList(lots) }
         }
 
+fun editLoSelectId(lots: Iterable<Lot>) =
+        message {
+            plain { text = "Укажите, какой лот мне мне следует поменять, милорд..." }
+            newline(2)
+            import { lotList(lots) }
+        }
+
 fun lotListResult(lots: Iterable<Lot>) =
         message {
             plain { text = "Укажите, по какому лоту Вы готовы подвести итоги, милорд..." }
@@ -56,6 +83,16 @@ fun resultEnterValue(lot: Lot) =
             plain { text = "Прошу, поделитесь со своим слугой тайным знанием о результатах этого лота, милорд..." }
             newline(2)
             import { lotExplainAdmin(lot) }
+        }
+
+fun notificationEnter() =
+        message {
+            plain { text = "Поведайте своему слуге, о какой из тайн следует рассказать смертным, милорд..." }
+        }
+
+fun customNotification(payload: String) =
+        message {
+            plain { text = payload; doEscape = false }
         }
 
 fun lotListNotification(lots: Iterable<Lot>) =

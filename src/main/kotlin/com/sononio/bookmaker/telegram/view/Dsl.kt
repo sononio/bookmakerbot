@@ -18,7 +18,7 @@ interface Multiline {
 
 abstract class Formatted(private val surroundBy: Char?, private val count: Int = 0) {
     var text = ""
-    protected var doEscape = true
+    var doEscape = true
 
     protected open fun symbolsToEscape(): Array<Char> =
             arrayOf('_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!')

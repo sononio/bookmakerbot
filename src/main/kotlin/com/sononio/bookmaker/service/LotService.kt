@@ -2,6 +2,7 @@ package com.sononio.bookmaker.service
 
 import com.sononio.bookmaker.model.lot.IntLot
 import com.sononio.bookmaker.model.lot.Lot
+import com.sononio.bookmaker.model.lot.NumericLot
 import com.sononio.bookmaker.model.lot.PercentLot
 import com.sononio.bookmaker.repo.LotRepo
 import com.sononio.bookmaker.util.enhancement.toDate
@@ -46,20 +47,33 @@ class LotService(
         return lotRepo.countByEndBetsTimeIsNullOrEndBetsTimeAfter(Date())
     }
 
-    fun parseLot(str: String): Lot {
+    fun parseLot(str: String, basedOn: Lot? = null): Lot {
         val lines = str.trim().lines()
 
-        val lotType = Lot.LotType.valueOf(lines[0].toUpperCase())
-        val name = lines[1]
-        val description = lines[2]
-        val question = lines[3]
-        val maxError = if (lines.size < 5 || lines[4].isEmpty()) null else BigDecimal(lines[4])
-        val endBetsTime = if (lines.size < 6 || lines[5].isEmpty()) null else lines[5].toDate(DATE_FORMATTER)
-        val resultsTime = if (lines.size < 7 || lines[6].isEmpty()) null else lines[6].toDate(DATE_FORMATTER)
+        basedOn?.let {
+            val numericLot = it as NumericLot
+            numericLot.name = if (lines.size < 1 || lines[0].isEmpty()) numericLot.name else lines[0]
+            numericLot.description = if (lines.size < 2 || lines[1].isEmpty()) numericLot.description else lines[1]
+            numericLot.question = if (lines.size < 3 || lines[2].isEmpty()) numericLot.question else lines[2]
+            numericLot.allowedError = if (lines.size < 4 || lines[3].isEmpty()) numericLot.allowedError else BigDecimal(lines[3])
+            numericLot.endBetsTime = if (lines.size < 5 || lines[4].isEmpty()) numericLot.endBetsTime else lines[4].toDate(DATE_FORMATTER)
+            numericLot.resultsTime = if (lines.size < 6 || lines[5].isEmpty()) numericLot.endBetsTime else lines[5].toDate(DATE_FORMATTER)
 
-        return when (lotType) {
-            Lot.LotType.INT -> IntLot(name, description, question, endBetsTime, resultsTime, maxError)
-            Lot.LotType.PERCENT -> PercentLot(name, description, question, endBetsTime, resultsTime, maxError)
+            return it
+
+        } ?: run {
+            val lotType = Lot.LotType.valueOf(lines[0].toUpperCase())
+            val name = lines[1]
+            val description = lines[2]
+            val question = lines[3]
+            val maxError = if (lines.size < 5 || lines[4].isEmpty()) null else BigDecimal(lines[4])
+            val endBetsTime = if (lines.size < 6 || lines[5].isEmpty()) null else lines[5].toDate(DATE_FORMATTER)
+            val resultsTime = if (lines.size < 7 || lines[6].isEmpty()) null else lines[6].toDate(DATE_FORMATTER)
+
+            return when (lotType) {
+                Lot.LotType.INT -> IntLot(name, description, question, endBetsTime, resultsTime, maxError)
+                Lot.LotType.PERCENT -> PercentLot(name, description, question, endBetsTime, resultsTime, maxError)
+            }
         }
     }
 

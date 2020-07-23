@@ -8,6 +8,7 @@ import javax.persistence.*
 class TelegramUserState(
         @Enumerated(EnumType.STRING)
         var state: State,
+        var editLotId: Long? = null,
         var showLotExplainedId: Long? = null,
         var resultLotId: Long? = null,
         var makeBet: Long? = null,
@@ -32,10 +33,13 @@ class TelegramUserState(
 
         ADMIN_MENU,
         START_LOT,
+        EDIT_LOT_ID,
+        EDIT_LOT_VALUE,
         SHOW_LAST_LOT,
         RESULT_START,
         RESULT_ENTER_ID,
         RESULT_ENTER_VALUE,
+        NOTIFY,
         NOTIFY_LOT
     }
 }
