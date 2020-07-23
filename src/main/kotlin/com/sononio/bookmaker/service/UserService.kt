@@ -80,6 +80,10 @@ class UserService(
         }
     }
 
+    fun notifyAllUsers(message: Plain) {
+        notifyAllUsers { message }
+    }
+
     fun notifyAllUsersAboutLot(lot: Lot) {
         notifyAllUsers { lotNotification(lot) }
     }

@@ -91,6 +91,7 @@ class StateMachine(
             "/editlot" -> {telegramUserStateService.goToEditLotId(message.user!!.userState); return}
             "/showlots" -> {telegramUserStateService.goToShowActiveLots(message.user!!.userState); return}
             "/result" -> {telegramUserStateService.goToResultStart(message.user!!.userState); return}
+            "/notify" -> {telegramUserStateService.goToNotify(message.user!!.userState); return}
             "/notifylot" -> {telegramUserStateService.goToNotifyLot(message.user!!.userState); return}
         }
 
@@ -113,6 +114,9 @@ class StateMachine(
                 lotService.updateLotResult(lotService.findById(message.user!!.userState.resultLotId!!)!!, message.text)
                 telegramUserStateService.goToShowLotExplained(
                         message.user!!.userState, message.user!!.userState.resultLotId) }
+            TelegramUserState.State.NOTIFY -> {
+                userService.notifyAllUsers(customNotification(message.text))
+                telegramUserStateService.goToAdminMenu(message.user!!.userState) }
             TelegramUserState.State.NOTIFY_LOT -> {
                 userService.notifyAllUsersAboutLot(lotService.findById(message.text.toLong())!!)
                 telegramUserStateService.goToAdminMenu(message.user!!.userState) }
@@ -176,6 +180,9 @@ class StateMachine(
                     lotExplainAdmin(lotService.findById(user.userState.showLotExplainedId!!)!!).toString()
                 }
             }
+        }
+        TelegramUserState.State.NOTIFY -> {
+            notificationEnter().toString()
         }
         TelegramUserState.State.NOTIFY_LOT -> {
             lotListNotification(lotService.findActiveLots()).toString()

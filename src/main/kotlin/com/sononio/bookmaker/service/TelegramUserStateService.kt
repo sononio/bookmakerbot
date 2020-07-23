@@ -116,6 +116,11 @@ class TelegramUserStateService(
         return telegramUserStateRepo.save(userState)
     }
 
+    fun goToNotify(userState: TelegramUserState): TelegramUserState {
+        userState.state = TelegramUserState.State.NOTIFY
+        return telegramUserStateRepo.save(userState)
+    }
+
     fun goToNotifyLot(userState: TelegramUserState): TelegramUserState {
         userState.state = TelegramUserState.State.NOTIFY_LOT
         return telegramUserStateRepo.save(userState)

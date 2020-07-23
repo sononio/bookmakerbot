@@ -39,6 +39,7 @@ class TelegramUserState(
         RESULT_START,
         RESULT_ENTER_ID,
         RESULT_ENTER_VALUE,
+        NOTIFY,
         NOTIFY_LOT
     }
 }

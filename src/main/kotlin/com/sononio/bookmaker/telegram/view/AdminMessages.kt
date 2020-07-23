@@ -85,6 +85,16 @@ fun resultEnterValue(lot: Lot) =
             import { lotExplainAdmin(lot) }
         }
 
+fun notificationEnter() =
+        message {
+            plain { text = "Поведайте своему слуге, о какой из тайн следует рассказать смертным, милорд..." }
+        }
+
+fun customNotification(payload: String) =
+        message {
+            plain { text = payload; doEscape = false }
+        }
+
 fun lotListNotification(lots: Iterable<Lot>) =
         message {
             plain { text = "Укажите, о каком лоте следует уведомить смертных, милорд..." }
