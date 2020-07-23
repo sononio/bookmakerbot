@@ -26,6 +26,26 @@ val startLotMessage = message { text = """Прошу, опишите вашем�
             """.trimMargin("|")
 }
 
+val editLotMessage = message { text = """Прошу, опишите вашему слуге как изменить лот, милорд:
+
+            |name
+            |description
+            |question
+            |[max_error]
+            |[bets_end]
+            |[results]
+
+            |name: text string
+            |description: text string
+            |question: text string
+            |max_error: number (integer or real)
+            |bets_end: date in format '25-01-2012T10:40' in MSK
+            |results: date in format '25-01-2012T10:40' in MSK
+            
+            |Оставьте строку пустой, если хотите пропустить значение, которое необязательно знать смертным, милорд.
+            """.trimMargin("|")
+}
+
 val lotNotFound = message { text = "Приношу свои глубочайшие извинения, милорд! Ваш верный слуга не смог отыскать лот! Прошу, укажите на него еще раз..." }
 
 fun lotExplainAdmin(lot: Lot) =
@@ -40,6 +60,13 @@ fun lotExplainAdmin(lot: Lot) =
 fun lotListShow(lots: Iterable<Lot>) =
         message {
             plain { text = "Укажите, какой лот мне описать более подробно, милопд..." }
+            newline(2)
+            import { lotList(lots) }
+        }
+
+fun editLoSelectId(lots: Iterable<Lot>) =
+        message {
+            plain { text = "Укажите, какой лот мне мне следует поменять, милорд..." }
             newline(2)
             import { lotList(lots) }
         }

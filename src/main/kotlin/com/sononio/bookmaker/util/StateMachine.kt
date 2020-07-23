@@ -88,6 +88,7 @@ class StateMachine(
         when (message.text) {
             "/start", "/menu" -> {telegramUserStateService.goToAdminMenu(message.user!!.userState); return}
             "/startlot" -> {telegramUserStateService.goToStatLot(message.user!!.userState); return}
+            "/editlot" -> {telegramUserStateService.goToEditLotId(message.user!!.userState); return}
             "/showlots" -> {telegramUserStateService.goToShowActiveLots(message.user!!.userState); return}
             "/result" -> {telegramUserStateService.goToResultStart(message.user!!.userState); return}
             "/notifylot" -> {telegramUserStateService.goToNotifyLot(message.user!!.userState); return}
@@ -97,6 +98,13 @@ class StateMachine(
             TelegramUserState.State.START_LOT -> {
                 lotService.createLotFromAdmin(lotService.parseLot(message.text))
                 telegramUserStateService.goToShowLastLot(message.user!!.userState) }
+            TelegramUserState.State.EDIT_LOT_ID -> {
+                telegramUserStateService.goToEditLotValue(message.user!!.userState, message.text.toLong()) }
+            TelegramUserState.State.EDIT_LOT_VALUE -> {
+                lotService.createLotFromAdmin(lotService.parseLot(message.text,
+                        lotService.findById(message.user!!.userState.editLotId!!)))
+                telegramUserStateService.goToShowLotExplained(message.user!!.userState,
+                        message.user!!.userState.editLotId) }
             TelegramUserState.State.SHOW_ACTIVE_LOTS -> {
                 telegramUserStateService.goToShowLotExplained(message.user!!.userState, message.text.toLong()) }
             TelegramUserState.State.RESULT_ENTER_ID -> {
@@ -143,6 +151,8 @@ class StateMachine(
     fun genAdminMessage(user: User): String = when (user.userState.state) {
         TelegramUserState.State.ADMIN_MENU -> adminMenuMessage.toString()
         TelegramUserState.State.START_LOT -> startLotMessage.toString()
+        TelegramUserState.State.EDIT_LOT_ID -> editLoSelectId(lotService.findActiveLots()).toString()
+        TelegramUserState.State.EDIT_LOT_VALUE -> editLotMessage.toString()
         TelegramUserState.State.SHOW_LAST_LOT -> {
             telegramUserStateService.goToAdminMenu(user.userState)
             lotExplainAdmin(lotService.findLastLot()).toString()

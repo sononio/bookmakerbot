@@ -73,6 +73,17 @@ class TelegramUserStateService(
         return telegramUserStateRepo.save(userState)
     }
 
+    fun goToEditLotId(userState: TelegramUserState): TelegramUserState {
+        userState.state = TelegramUserState.State.EDIT_LOT_ID
+        return telegramUserStateRepo.save(userState)
+    }
+
+    fun goToEditLotValue(userState: TelegramUserState, id: Long?): TelegramUserState {
+        userState.state = TelegramUserState.State.EDIT_LOT_VALUE
+        userState.editLotId = id
+        return telegramUserStateRepo.save(userState)
+    }
+
     fun goToShowLastLot(userState: TelegramUserState): TelegramUserState {
         userState.state = TelegramUserState.State.SHOW_LAST_LOT
         return telegramUserStateRepo.save(userState)
