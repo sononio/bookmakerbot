@@ -19,8 +19,8 @@ val startLotMessage = message { text = """Прошу, опишите вашем�
             |description: text string
             |question: text string
             |max_error: number (integer or real)
-            |bets_end: date in format '25-01-2012T10:40' in MSK
-            |results: date in format '25-01-2012T10:40' in MSK
+            |bets_end: date in format '25-01-2012 10:40' in UTC
+            |results: date in format '25-01-2012 10:40' in UTC
             
             |Оставьте строку пустой, если хотите пропустить значение, которое необязательно знать смертным, милорд.
             """.trimMargin("|")
@@ -39,8 +39,8 @@ val editLotMessage = message { text = """Прошу, опишите вашему
             |description: text string
             |question: text string
             |max_error: number (integer or real)
-            |bets_end: date in format '25-01-2012T10:40' in MSK
-            |results: date in format '25-01-2012T10:40' in MSK
+            |bets_end: date in format '25-01-2012 10:40' in UTC
+            |results: date in format '25-01-2012 10:40' in UTC
             
             |Оставьте строку пустой, если хотите пропустить значение, которое необязательно знать смертным, милорд.
             """.trimMargin("|")
